@@ -1,0 +1,13 @@
+@import 'tailwindcss/base';
+@import './global/reset';
+@import './global/normalize';
+@import './global/fonts';
+@import './global/base';
+
+
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html {
+  @apply antialiased;
+}

@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Container, Row, Col } from 'react-grid-system';
+import { useDispatch } from 'react-redux';
+import { getCharacters } from 'store/features/charactersSlice';
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const loadList = async () => {
+    const resultAction = await dispatch(getCharacters(10));
+    console.log('resultAction: ', resultAction);
+  };
+
+  useEffect(() => {
+    loadList();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Row>
+        <Col sm={4}>One of three columns</Col>
+        <Col sm={4}>One of three columns</Col>
+        <Col sm={4}>One of three columns</Col>
+      </Row>
+    </Container>
   );
-}
+};
 
 export default App;
