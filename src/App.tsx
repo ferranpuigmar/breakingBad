@@ -1,5 +1,5 @@
+import Header from 'modules/shared/components/Header/Header';
 import React, { useEffect } from 'react';
-import { Container, Row, Col } from 'react-grid-system';
 import { useDispatch } from 'react-redux';
 import { getCharacters } from 'store/features/charactersSlice';
 
@@ -14,15 +14,7 @@ const App = () => {
     loadList();
   }, []);
 
-  return (
-    <Container>
-      <Row>
-        <Col sm={4}>One of three columns</Col>
-        <Col sm={4}>One of three columns</Col>
-        <Col sm={4}>One of three columns</Col>
-      </Row>
-    </Container>
-  );
+  return <Header />;
 };
 
 export default App;

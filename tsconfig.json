@@ -16,10 +16,7 @@
     "noEmit": true,
     "jsx": "react",
     "typeRoots": ["node_modules/@types/"],
-    "baseUrl": "src",
-    "paths": {
-      "@modules/*": ["modules/*"]
-    }
+    "baseUrl": "src"
   },
   "include": ["src", "test", "custom.d.ts"]
 }
