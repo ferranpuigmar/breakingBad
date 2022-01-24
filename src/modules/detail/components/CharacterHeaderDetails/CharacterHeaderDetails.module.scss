@@ -1,0 +1,46 @@
+.characterHeaderDetail {
+  display: flex;
+
+  &__titles {
+    width: 100%;
+    @apply pr-5;
+  }
+
+  &__name {
+    @apply font-cooper text-3xl m-0;
+
+    @screen md {
+      @apply text-5xl;
+    }
+  }
+
+  &__nickname {
+    @apply font-poppins_semibold text-xl mt-2 text-green;
+
+    @screen md {
+      @apply text-3xl;
+    }
+  }
+
+  &__deathCounter {
+    svg {
+      transform: scale(0.8);
+      transform-origin: center;
+
+      @screen md {
+        transform: none;
+      }
+    }
+  }
+
+  &__deaths {
+    position: relative;
+    width: 100%;
+    max-width: 100px;
+    margin: 0 0 0 auto;
+
+    svg {
+      @apply fill-green;
+    }
+  }
+}

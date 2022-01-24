@@ -8,15 +8,24 @@ import getDeathCountByNameService from 'services/getDeathCountByNameService';
 import getRandomQuoteByAuthorService from 'services/getRandomQuoteByAuthorService';
 import { Col, Row } from 'react-grid-system';
 import ImageLoader from 'modules/shared/components/ImageLoader/ImageLoader';
-import styles from './CharacterDetail.module.scss';
-import HeaderDetails from '../HeaderDetails/HeaderDetails';
+import CharacterHeaderDetails from '../CharacterHeaderDetails/CharacterHeaderDetails';
 import Wrapper from 'modules/shared/components/Wrapper/Wrapper';
+import LabelInfo from '../LabelInfo/LabelInfo';
+import { useTranslation } from 'react-i18next';
+import styles from './CharacterDetail.module.scss';
+import getBirthdate from 'modules/shared/utils/getBirthdate';
+import Quote from '../Quote/Quote';
 
 const CharacterDetail = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
   const [character, setCharacter] = useState<CharacterDetailDTO>();
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const occupationValue = character?.occupation.join(', ');
+  const appearancesValue = character?.appearance.join(', ');
+  const birthDateValue = getBirthdate(character?.birthday);
 
   const characterDetails = useSelector((state: RootState) =>
     state.characters.list.find((character) => character.char_id === parseInt(id as string))
@@ -59,19 +68,35 @@ const CharacterDetail = () => {
   return (
     <Wrapper>
       <Row>
-        <Col>
+        <Col sm={12} lg={6} xl={4} className={styles.characterDetail__image}>
           <ImageLoader url={character?.img} title={character?.name} alt={character?.name} />
         </Col>
         <Col>
-          <HeaderDetails
+          <CharacterHeaderDetails
             name={character?.name}
             nickname={character?.nickname}
             isLoading={isLoading}
-            deads={character?.deads}
+            deaths={character?.deads}
+            className={styles.characterDetail__header}
           />
-          <div className={styles.characterDetail__fictionInfo}></div>
-          <div className={styles.characterDetail__quote}>{character?.quote}</div>
-          <div className={styles.characterDetail__realInfo}></div>
+          <div className={styles.characterDetail__occupation}>
+            <LabelInfo isLoading={isLoading} title={t('occupation')} text={occupationValue} />
+          </div>
+          <div className={styles.characterDetail__fictionInfo}>
+            <LabelInfo isLoading={isLoading} title={t('birthday')} text={birthDateValue} />
+            <LabelInfo isLoading={isLoading} title={t('status')} text={character?.status} />
+          </div>
+          <div className={styles.characterDetail__realInfo}>
+            <LabelInfo isLoading={isLoading} title={t('seasons')} text={appearancesValue} />
+            <LabelInfo
+              isLoading={isLoading}
+              title={t('interpretedby')}
+              text={character?.portrayed}
+            />
+          </div>
+          <div className={styles.characterDetail__quote}>
+            <Quote text={character?.quote} isLoading={isLoading} />
+          </div>
         </Col>
       </Row>
     </Wrapper>
