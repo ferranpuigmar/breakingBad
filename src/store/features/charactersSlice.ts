@@ -19,13 +19,13 @@ const initialState: CharactersState = {
 
 export const getCharacters = createAsyncThunk<
   CharactersResponse,
-  number,
+  { limit?: number },
   {
     rejectValue: MyKnownError;
   }
->('GET_CHARACTERS_FROM_API', async (limit, thunkApi) => {
+>('GET_CHARACTERS_FROM_API', async ({ limit }, thunkApi) => {
   try {
-    return await getCharactersService(limit);
+    return await getCharactersService({ limit });
   } catch (err) {
     return thunkApi.rejectWithValue((await err) as MyKnownError);
   }

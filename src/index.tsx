@@ -8,6 +8,9 @@ import store from 'store/store';
 import { ScreenClassProvider, setConfiguration } from 'react-grid-system';
 import breakpoints from './config/breakpoints.config.js';
 import { getBreakpoints } from 'utils/breakpoints';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import CharactersList from 'modules/home/components/CharacterList/CharactersList';
+import NotFound from 'modules/shared/components/NotFound/NotFound';
 
 setConfiguration({
   breakpoints: getBreakpoints(breakpoints)
@@ -16,7 +19,15 @@ setConfiguration({
 ReactDOM.render(
   <Provider store={store}>
     <ScreenClassProvider>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="/" element={<CharactersList />} />
+            <Route path="/character/:id" element={<CharactersList message="adios" />} />
+          </Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </BrowserRouter>
     </ScreenClassProvider>
   </Provider>,
   document.getElementById('root')

@@ -15,7 +15,13 @@ type CharacterFromApi = {
 
 export type CharactersResponse = CharacterFromApi[];
 
-const getCharactersService = async (limit?: number): Promise<CharactersResponse> => {
+type GetCharactersServiceParams = {
+  limit?: number;
+};
+
+const getCharactersService = async ({
+  limit
+}: GetCharactersServiceParams): Promise<CharactersResponse> => {
   let apiUrl = `/characters`;
   if (limit) {
     apiUrl = `${apiUrl}?limit=${limit}&offset=${limit}`;

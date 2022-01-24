@@ -1,0 +1,15 @@
+.characterList {
+  @apply grid grid-cols-1 gap-8 my-4;
+
+  @screen md {
+    @apply grid-cols-2 gap-8 my-8;
+  }
+
+  @screen xl {
+    @apply grid-cols-4 gap-8 my-8;
+  }
+
+  @screen xxl {
+    @apply grid-cols-5 gap-8;
+  }
+}
