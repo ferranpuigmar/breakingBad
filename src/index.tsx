@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import 'infraestructure/i18n/config';
+import 'infraestructure/i18n/i18n';
 import 'assets/styles/global.scss';
 import App from 'App';
 import store from 'store/store';
@@ -12,21 +12,24 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CharactersList from 'modules/home/components/CharacterList/CharactersList';
 import NotFound from 'modules/shared/components/NotFound/NotFound';
 import CharacterDetail from 'modules/detail/components/CharacterDetail/CharacterDetail';
+import { I18nextProvider } from 'react-i18next';
 
 setConfiguration({
   breakpoints: getBreakpoints(breakpoints)
 });
+
+const base = '/:lng';
 
 ReactDOM.render(
   <Provider store={store}>
     <ScreenClassProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="/" element={<CharactersList />} />
-            <Route path="/character/:id" element={<CharacterDetail />} />
+          <Route path={base} element={<App />}>
+            <Route path={base} element={<CharactersList />} />
+            <Route path={`${base}/character/:id`} element={<CharacterDetail />} />
+            <Route path="*" element={<NotFound message="route_not_found" />}></Route>
           </Route>
-          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
     </ScreenClassProvider>

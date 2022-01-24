@@ -9,18 +9,25 @@ import getRandomQuoteByAuthorService from 'services/getRandomQuoteByAuthorServic
 import { Col, Row } from 'react-grid-system';
 import ImageLoader from 'modules/shared/components/ImageLoader/ImageLoader';
 import CharacterHeaderDetails from '../CharacterHeaderDetails/CharacterHeaderDetails';
-import Wrapper from 'modules/shared/components/Wrapper/Wrapper';
 import LabelInfo from '../LabelInfo/LabelInfo';
 import { useTranslation } from 'react-i18next';
 import styles from './CharacterDetail.module.scss';
 import getBirthdate from 'modules/shared/utils/getBirthdate';
 import Quote from '../Quote/Quote';
+import { ErrorResponse, ErrorState, HttpStatus } from 'modules/shared/utils/getError';
+import { CharacterFromApi } from 'services/getCharactersService';
+import NotFound from 'modules/shared/components/NotFound/NotFound';
+import Wrapper from 'modules/shared/components/Wrapper/Wrapper';
 
 const CharacterDetail = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const [character, setCharacter] = useState<CharacterDetailDTO>();
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<ErrorState>({
+    status: null,
+    message: '',
+    isError: false
+  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const occupationValue = character?.occupation.join(', ');
@@ -32,38 +39,59 @@ const CharacterDetail = () => {
   );
 
   const loadDetails = async () => {
-    let characterBasiInfo = characterDetails ?? null;
-
     try {
-      if (!characterDetails) {
-        characterBasiInfo = await getCharacterByIdService(id as string);
-      }
+      const newCharacterResponse =
+        characterDetails ?? (await getCharacterByIdService(id as string));
 
-      if (!characterBasiInfo) {
-        setError(true);
+      if ((newCharacterResponse as ErrorResponse).type === 'error') {
+        setError({
+          status: (newCharacterResponse as ErrorResponse).status,
+          message: t((newCharacterResponse as ErrorResponse).message ?? ''),
+          isError: true
+        });
         return null;
       }
 
+      const characterBasicInfo = newCharacterResponse as CharacterFromApi;
+
       setIsLoading(true);
       const [deathCounts, quote] = await Promise.all([
-        await getDeathCountByNameService(characterBasiInfo?.name),
-        await getRandomQuoteByAuthorService(characterBasiInfo?.name)
+        await getDeathCountByNameService(characterBasicInfo?.name),
+        await getRandomQuoteByAuthorService(characterBasicInfo?.name)
       ]);
 
       setCharacter({
-        ...characterBasiInfo,
+        ...characterBasicInfo,
         deads: deathCounts?.deathCount ?? null,
         quote: quote?.quote ?? null
       });
       setIsLoading(false);
-    } catch (err) {
-      setError(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      setError({
+        status: (err as ErrorResponse).status,
+        message: t((err as ErrorResponse).message ?? ''),
+        isError: true
+      });
     }
   };
 
   useEffect(() => {
     if (!character) loadDetails();
   }, [characterDetails]);
+
+  const renderErrorView = (error: ErrorState): React.ReactElement => {
+    switch (error.status) {
+      case HttpStatus.NOT_FOUND:
+        return <NotFound message={error.message as string} />;
+      default:
+        return <></>;
+    }
+  };
+
+  if (error.isError) {
+    return renderErrorView(error);
+  }
 
   return (
     <Wrapper>

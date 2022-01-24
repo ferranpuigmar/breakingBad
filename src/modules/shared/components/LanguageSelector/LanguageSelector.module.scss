@@ -1,0 +1,26 @@
+.languageSelector {
+  margin: 0 0 0 auto;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+
+  ul {
+    display: inline-flex;
+    justify-content: flex-end;
+
+    li {
+      @apply ml-3 text-white font-bold;
+
+      span {
+        cursor: pointer;
+
+        &:global(.selected),
+        &:hover {
+          @apply text-yellow;
+        }
+      }
+    }
+  }
+}

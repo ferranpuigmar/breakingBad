@@ -2,10 +2,11 @@
   display: inline-flex;
   flex-flow: column;
   align-items: center;
-  max-width: 100px;
+  width: 100%;
+  max-width: 110px;
   position: absolute;
   top: 0;
-  right: 0;
+  right: 20px;
 
   &__icon {
     width: 70%;

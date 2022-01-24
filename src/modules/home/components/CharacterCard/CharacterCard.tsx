@@ -1,5 +1,6 @@
 import ImageLoader from 'modules/shared/components/ImageLoader/ImageLoader';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styles from './CharacterCard.module.scss';
 
@@ -11,9 +12,10 @@ type CharacterCard = {
 };
 
 const CharacterCard = ({ char_id, name, img, nickname }: CharacterCard) => {
-  console.log('img: ', img);
+  const { i18n } = useTranslation();
+
   return (
-    <Link to={`/character/${char_id}`}>
+    <Link to={`/${i18n.language}/character/${char_id}`}>
       <div className={styles.characterCard}>
         <ImageLoader url={img} title={name} alt={name} className={styles.characterCard__image} />
         <div className={styles.characterCard__info}>

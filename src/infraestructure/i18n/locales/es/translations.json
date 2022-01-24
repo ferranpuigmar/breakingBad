@@ -1,3 +1,12 @@
 {
-  "home_title": "Breaking Bad"
+  "home_title": "Breaking Bad",
+  "route_not_found": "Hijo, parece que andas perdido...",
+  "character_not_found": "La persona que buscas tuvo un pequeño accidente...",
+  "occupation": "Ocupación:",
+  "birthday": "Aniversario:",
+  "status": "Estado:",
+  "seasons": "Temporadas:",
+  "interpretedby": "Interpretado por:",
+  "deaths": "Muertes",
+  "loading": "Cargando"
 }
