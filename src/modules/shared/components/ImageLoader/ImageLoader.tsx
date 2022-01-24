@@ -5,9 +5,9 @@ import { ReactComponent as Placeholder } from 'assets/images/placeholder.svg';
 import cn from 'classnames';
 
 type ImageLoader = {
-  url: string;
-  title: string;
-  alt: string;
+  url: string | undefined;
+  title: string | undefined;
+  alt: string | undefined;
   className?: string;
 };
 
@@ -31,7 +31,7 @@ const ImageLoader = ({ url, title, alt, className }: ImageLoader) => {
     img.onerror = () => {
       handleErrorImage();
     };
-    img.src = url;
+    img.src = url as string;
   };
 
   useEffect(() => {
@@ -45,14 +45,14 @@ const ImageLoader = ({ url, title, alt, className }: ImageLoader) => {
     if (isLoad && url) {
       handleLoadImage();
     }
-  }, [imageUrl, isLoad]);
+  }, [imageUrl, isLoad, url]);
 
   return (
     <div ref={refImg} className={cn('imageLoader', styles.imageLoader, className)}>
       {!url || error || !imageUrl ? (
         <Placeholder />
       ) : (
-        <img src={imageUrl} title={title} alt={alt} />
+        <img src={imageUrl} title={title ?? ''} alt={alt ?? ''} />
       )}
     </div>
   );

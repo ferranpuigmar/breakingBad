@@ -1,6 +1,6 @@
 import apiClient from 'config/axiosClient.config';
 
-type CharacterFromApi = {
+export type CharacterFromApi = {
   char_id: number;
   name: string;
   birthday: string;

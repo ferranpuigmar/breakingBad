@@ -1,3 +1,4 @@
+import Wrapper from 'modules/shared/components/Wrapper/Wrapper';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCharacters } from 'store/features/charactersSlice';
@@ -27,11 +28,13 @@ const CharactersList = ({ message }: CharactersList) => {
   }
 
   return (
-    <div className={styles.characterList}>
-      {characters.list.map((character) => (
-        <CharacterCard key={character.char_id} {...character} />
-      ))}
-    </div>
+    <Wrapper>
+      <div className={styles.characterList}>
+        {characters.list.map((character) => (
+          <CharacterCard key={character.char_id} {...character} />
+        ))}
+      </div>
+    </Wrapper>
   );
 };
 
