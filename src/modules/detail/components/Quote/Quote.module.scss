@@ -1,0 +1,23 @@
+.quote {
+  @apply my-12 pl-8 pr-3 font-poppins_semibold font-bold text-xl italic;
+  position: relative;
+  letter-spacing: 0.8px;
+
+  &:before {
+    content: '"';
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 400;
+    @apply text-8xl opacity-20 text-green;
+    transform: scale(1.8);
+    transform-origin: center;
+  }
+}
+
+.noQuote {
+  &:before {
+    content: '';
+  }
+}

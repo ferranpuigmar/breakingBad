@@ -1,0 +1,11 @@
+.wrapper {
+  @apply my-4;
+
+  @screen md {
+    @apply my-8;
+  }
+
+  @screen xl {
+    @apply my-8;
+  }
+}

@@ -11,6 +11,7 @@ import { getBreakpoints } from 'utils/breakpoints';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CharactersList from 'modules/home/components/CharacterList/CharactersList';
 import NotFound from 'modules/shared/components/NotFound/NotFound';
+import CharacterDetail from 'modules/detail/components/CharacterDetail/CharacterDetail';
 
 setConfiguration({
   breakpoints: getBreakpoints(breakpoints)
@@ -23,7 +24,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="/" element={<CharactersList />} />
-            <Route path="/character/:id" element={<CharactersList message="adios" />} />
+            <Route path="/character/:id" element={<CharacterDetail />} />
           </Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
