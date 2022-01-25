@@ -10,5 +10,6 @@
   "deaths": "Muertes",
   "loading": "Cargando",
   "casting_title": "El casting de Breaking Bad",
-  "not_found_characters": "Vuelve a cargar, no encontramos al casting"
+  "not_found_characters": "Vuelve a cargar, no encontramos al casting",
+  "internal_server_error": "Parece ser que tenemos problemas..."
 }

@@ -83,6 +83,7 @@ const CharacterDetail = () => {
   const renderErrorView = (error: ErrorState): React.ReactElement => {
     switch (error.status) {
       case HttpStatus.NOT_FOUND:
+      case HttpStatus.INTERNAL_SERVER:
         return <NotFound message={error.message as string} />;
       default:
         return <></>;

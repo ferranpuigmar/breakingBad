@@ -12,12 +12,15 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CharactersList from 'modules/home/components/CharacterList/CharactersList';
 import NotFound from 'modules/shared/components/NotFound/NotFound';
 import CharacterDetail from 'modules/detail/components/CharacterDetail/CharacterDetail';
+import checkDefaultLang from 'utils/lang';
 
 setConfiguration({
   breakpoints: getBreakpoints(breakpoints)
 });
 
 const base = '/:lng';
+
+checkDefaultLang();
 
 ReactDOM.render(
   <Provider store={store}>
