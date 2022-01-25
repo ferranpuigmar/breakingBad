@@ -6,6 +6,10 @@ Este proyecto se ha iniciado con [Create React App](https://github.com/facebook/
 
 En el directorio del proyecto puedes ejecutar:
 
+### `npm install`
+
+Instala los paquetes necesarios para poder iniciar la app.
+
 ### `npm start`
 
 Corre la aplicación en modo desarrollo
