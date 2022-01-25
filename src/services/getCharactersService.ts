@@ -1,3 +1,4 @@
+import getError, { ErrorResponse, HttpStatus } from './../modules/shared/utils/getError';
 import apiClient from 'config/axiosClient.config';
 
 export type CharacterFromApi = {
@@ -21,12 +22,17 @@ type GetCharactersServiceParams = {
 
 const getCharactersService = async ({
   limit
-}: GetCharactersServiceParams): Promise<CharactersResponse> => {
+}: GetCharactersServiceParams): Promise<CharactersResponse | ErrorResponse> => {
   let apiUrl = `/characters`;
   if (limit) {
     apiUrl = `${apiUrl}?limit=${limit}&offset=${limit}`;
   }
-  return await apiClient().get<CharactersResponse>(apiUrl);
+  try {
+    const charactersResponse = await apiClient().get<CharactersResponse>(apiUrl);
+    return charactersResponse;
+  } catch (err) {
+    return getError(HttpStatus.INTERNAL_SERVER, 'internal_server_error');
+  }
 };
 
 export default getCharactersService;

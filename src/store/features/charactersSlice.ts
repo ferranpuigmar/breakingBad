@@ -1,33 +1,30 @@
-import getCharactersService, { CharactersResponse } from './../../services/getCharactersService';
+import { ErrorResponse } from 'modules/shared/utils/getError';
+import getCharactersService, { CharactersResponse } from 'services/getCharactersService';
 import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit';
-
-type MyKnownError = {
-  errorMessage: string;
-};
 
 type CharactersState = {
   list: CharactersResponse;
   loading: boolean;
-  error: null | string | SerializedError;
+  error: undefined | string | SerializedError;
 };
 
 const initialState: CharactersState = {
   list: [],
   loading: true,
-  error: null
+  error: undefined
 };
 
 export const getCharacters = createAsyncThunk<
-  CharactersResponse,
+  CharactersResponse | ErrorResponse,
   { limit?: number },
   {
-    rejectValue: MyKnownError;
+    rejectValue: ErrorResponse;
   }
 >('GET_CHARACTERS_FROM_API', async ({ limit }, thunkApi) => {
   try {
     return await getCharactersService({ limit });
   } catch (err) {
-    return thunkApi.rejectWithValue((await err) as MyKnownError);
+    return thunkApi.rejectWithValue((await err) as ErrorResponse);
   }
 });
 
@@ -46,11 +43,11 @@ const charactersSlice = createSlice({
     }),
       builder.addCase(getCharacters.fulfilled, (state, action) => {
         state.loading = false;
-        state.list = action.payload;
+        state.list = action.payload as CharactersResponse;
       }),
       builder.addCase(getCharacters.rejected, (state, action) => {
         if (action.payload) {
-          state.error = action.payload.errorMessage;
+          state.error = action.payload.message;
         } else {
           state.error = action.error;
         }

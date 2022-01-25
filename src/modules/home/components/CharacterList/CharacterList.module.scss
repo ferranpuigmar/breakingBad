@@ -13,3 +13,7 @@
     @apply grid-cols-5 gap-8;
   }
 }
+
+.title {
+  @apply font-poppins_semibold my-5 text-3xl;
+}
